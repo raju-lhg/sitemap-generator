@@ -5,6 +5,7 @@ namespace App\Services;
 use DOMDocument;
 use SimpleXMLElement;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class SitemapGenerator
 {
@@ -66,6 +67,10 @@ class SitemapGenerator
         $sitemap_xml = $sitemap->asXML();
 
         // Save the XML to a file
+        $folderPath = public_path('sitemaps');
+        if (!File::isDirectory($folderPath)) {
+            File::makeDirectory($folderPath, $mode = 0755, true, true);
+        }
         $sitemapFileName = 'sitemaps/'.Str::slug($hostname) . '.xml';
         file_put_contents($sitemapFileName, $sitemap_xml);
 
