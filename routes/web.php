@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    SitemapGenerator::generate_sitemap('https://www.lhgraphics.com/');
     return view('welcome');
 });
 
