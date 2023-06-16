@@ -11,7 +11,7 @@ class SiteMapController extends Controller
 {
     public function index()
     {
-        $siteMaps = SiteMap::all();
+        $siteMaps = SiteMap::with('createdByUser')->get();
 
         return view('site-maps.index', compact('siteMaps'));
     }

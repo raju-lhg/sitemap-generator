@@ -55,7 +55,7 @@
                                     {{ $siteMap->note }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{ $siteMap->created_by }}
+                                    {{ $siteMap->createdByUser->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $siteMap->xml_path }}
