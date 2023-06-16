@@ -23,13 +23,11 @@ class SiteMapController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'url' => 'required',
-            'note' => 'required',
-            'created_by' => 'required',
-            'xml_path' => 'required',
+            'url' => 'required'
         ]);
 
-        SitemapGenerator::generate_sitemap($request->url);
+        $validatedData['created_by'] =  Auth()->user()->id;
+        $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
 
         SiteMap::create($validatedData);
 
@@ -44,13 +42,14 @@ class SiteMapController extends Controller
     public function update(Request $request, SiteMap $siteMap)
     {
         $validatedData = $request->validate([
-            'url' => 'required',
-            'note' => 'required',
-            'created_by' => 'required',
-            'xml_path' => 'required',
+            'url' => 'required'
         ]);
 
+        $validatedData['created_by'] =  Auth()->user()->id;
+        $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
+
         $siteMap->update($validatedData);
+
 
         return redirect()->route('site-maps.index')->with('success', 'Site Map updated successfully.');
     }

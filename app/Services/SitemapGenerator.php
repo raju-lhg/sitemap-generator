@@ -66,8 +66,10 @@ class SitemapGenerator
         $sitemap_xml = $sitemap->asXML();
 
         // Save the XML to a file
-        $sitemapFileName = Str::slug($hostname) . '.xml';
+        $sitemapFileName = 'sitemaps/'.Str::slug($hostname) . '.xml';
         file_put_contents($sitemapFileName, $sitemap_xml);
+
+        return $sitemapFileName;
     }
 
     public static function urljoin($base, $relative)
