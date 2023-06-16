@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SiteMap;
+use App\Services\SitemapGenerator;
 use Illuminate\Http\Request;
 
 class SiteMapController extends Controller
@@ -27,6 +28,8 @@ class SiteMapController extends Controller
             'created_by' => 'required',
             'xml_path' => 'required',
         ]);
+
+        SitemapGenerator::generate_sitemap($request->url);
 
         SiteMap::create($validatedData);
 
