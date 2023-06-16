@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SiteMap;
 use App\Services\SitemapGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class SiteMapController extends Controller
 {
@@ -62,6 +63,14 @@ class SiteMapController extends Controller
 
     public function destroy(SiteMap $siteMap)
     {
+        // Delete the associated XML file
+        if (!empty($siteMap->xml_path)) {
+            $filePath = public_path($siteMap->xml_path);
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+        }
+
         $siteMap->delete();
 
         return redirect()->route('site-maps.index')->with('success', 'Site Map deleted successfully.');
