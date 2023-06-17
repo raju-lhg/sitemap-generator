@@ -58,7 +58,8 @@ class SiteMapController extends Controller
     public function show($id)
     {
         $sitemap = SiteMap::with('createdByUser')->findOrFail($id);
-        return view('site-maps.details', compact('sitemap'));
+        $sitemapData = SitemapGenerator::generateTreeFromSitemapXML($sitemap->xml_path);
+        return view('site-maps.details', compact('sitemap', 'sitemapData'));
     }
 
     public function destroy(SiteMap $siteMap)

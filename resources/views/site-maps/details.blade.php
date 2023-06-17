@@ -51,45 +51,7 @@
             // Initialize the jsTree
             $('#sitemap').jstree({
                 'core': {
-                    'data': [
-                        {
-                        "text": "Home",
-                        "state": { "opened": true },
-                        "children": []
-                        },
-                        {
-                        "text": "About",
-                        "state": { "opened": true },
-                        "children": [
-                            { "text": "Mission" },
-                            { "text": "Vision" },
-                            { "text": "Values" }
-                        ]
-                        },
-                        {
-                        "text": "Services",
-                        "state": { "opened": true },
-                        "children": [
-                            { "text": "Service 1" },
-                            { "text": "Service 2" },
-                            { "text": "Service 3" }
-                        ]
-                        },
-                        {
-                        "text": "Products",
-                        "state": { "opened": true },
-                        "children": [
-                            { "text": "Product 1" },
-                            { "text": "Product 2" },
-                            { "text": "Product 3" }
-                        ]
-                        },
-                        {
-                        "text": "Contact",
-                        "state": { "opened": true },
-                        "children": []
-                        }
-                    ]
+                    'data': {!! json_encode($sitemapData) !!}
                 },
                 'plugins': ["wholerow"]
             });
