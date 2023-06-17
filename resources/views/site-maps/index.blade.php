@@ -58,7 +58,7 @@
                                     {{ $siteMap->createdByUser->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{ $siteMap->xml_path }}
+                                    <a target="_blank" href="{{ route('home') }}/{{ $siteMap->xml_path }}">{{ $siteMap->xml_path }}</a>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $siteMap->created_at->format('Y-m-d H:i:s') }}
