@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SiteMap;
+use App\Services\DomainLookUp;
 use App\Services\SitemapGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -29,6 +30,7 @@ class SiteMapController extends Controller
 
         $validatedData['created_by'] =  Auth()->user()->id;
         $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
+        $validatedData['dns_data'] = DomainLookUp::get_dns_records($request->url);
 
         SiteMap::create($validatedData);
 
@@ -48,6 +50,7 @@ class SiteMapController extends Controller
 
         $validatedData['created_by'] =  Auth()->user()->id;
         $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
+        $validatedData['dns_data'] = DomainLookUp::get_dns_records($request->url);
 
         $siteMap->update($validatedData);
 
