@@ -143,17 +143,19 @@ class SitemapGenerator
         $jsTreeData = [];
         foreach ($nodes as $key => $node) {
             $jsTreeNode = [
-                'text' => $node['text']
+                'text' => $node['text'],
+                'state' => [
+                    'opened' => true
+                ]
             ];
 
             if (!empty($node['children'])) {
                 $jsTreeNode['children'] = self::convertToJsTreeFormat($node['children']);
+                $jsTreeNode['text'] .= ' (' . count($node['children']) . ')';
             }
 
             $jsTreeData[] = $jsTreeNode;
         }
-
-        \Log::info(json_encode(['jstree' => $jsTreeData]));
 
         return $jsTreeData;
     }
