@@ -8,6 +8,8 @@ class DomainLookUp
     public static function get_dns_records($url){
         $url = self::filter_url(trim($url));
 
+        $error = true;
+
         if ($url && self::is_valid_url($url)) {
             $data = array();
             $value = $url;
