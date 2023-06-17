@@ -31,6 +31,7 @@ class SiteMapController extends Controller
         $validatedData['created_by'] =  Auth()->user()->id;
         $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
         $validatedData['dns_data'] = DomainLookUp::get_dns_records($request->url);
+        $validatedData['who_is_data'] = DomainLookUp::get_who_is_data($request->url);
 
         SiteMap::create($validatedData);
 
@@ -51,6 +52,7 @@ class SiteMapController extends Controller
         $validatedData['created_by'] =  Auth()->user()->id;
         $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
         $validatedData['dns_data'] = DomainLookUp::get_dns_records($request->url);
+        $validatedData['who_is_data'] = DomainLookUp::get_who_is_data($request->url);
 
         $siteMap->update($validatedData);
 

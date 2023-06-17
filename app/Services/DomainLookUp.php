@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
+use Phois\Whois\Whois;
 
 class DomainLookUp
 {
@@ -113,5 +114,13 @@ class DomainLookUp
 
         // Output way2tutorial.com
         return $domain_name;
+    }
+
+    public static function get_who_is_data($tld)
+    {
+        $domain = new Whois(self::filter_url($tld));
+        $result = $domain->info();
+
+        return json_encode($result);
     }
 }
