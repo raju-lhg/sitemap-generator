@@ -57,7 +57,7 @@ class SiteMapController extends Controller
 
     public function show($id)
     {
-        $sitemap = SiteMap::findOrFail($id);
+        $sitemap = SiteMap::with('createdByUser')->findOrFail($id);
         return view('site-maps.details', compact('sitemap'));
     }
 
