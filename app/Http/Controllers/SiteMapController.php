@@ -35,9 +35,9 @@ class SiteMapController extends Controller
         $validatedData['who_is_data'] = str_replace("\r\n", "</br>", DomainLookUp::get_who_is_data($request->url));
         // dd($validatedData['who_is_data']);
 
-        SiteMap::create($validatedData);
+        $siteMap = SiteMap::create($validatedData);
 
-        return redirect()->route('site-maps.index')->with('success', 'Site Map created successfully.');
+        return redirect()->route('site-maps.show', ['id' => $siteMap->id])->with('success', 'Site Map created successfully.');
     }
 
     public function edit(SiteMap $siteMap)
@@ -58,8 +58,7 @@ class SiteMapController extends Controller
 
         $siteMap->update($validatedData);
 
-
-        return redirect()->route('site-maps.index')->with('success', 'Site Map updated successfully.');
+        return redirect()->route('site-maps.show', ['id' => $siteMap->id])->with('success', 'Site Map updated successfully.');
     }
 
     public function show($id)
