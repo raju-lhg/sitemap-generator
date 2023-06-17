@@ -43,6 +43,7 @@ COPY vite.config.js /var/www/html/vite.config.js
 
 # Expose ports
 EXPOSE 80 6001
+EXPOSE 5173 5173
 
 # Start the development server using Vite
-CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev"]

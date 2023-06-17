@@ -23,6 +23,7 @@ services:
     ports:
       - 8002:6001
       - 8001:80
+      - 5173:80
     restart: unless-stopped
     volumes:
       - .:/var/www/html
