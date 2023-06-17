@@ -121,6 +121,6 @@ class DomainLookUp
         $domain = new Whois(self::filter_url($tld));
         $result = $domain->info();
 
-        return json_encode($result);
+        return $result;
     }
 }

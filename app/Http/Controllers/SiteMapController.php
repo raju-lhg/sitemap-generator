@@ -31,7 +31,9 @@ class SiteMapController extends Controller
         $validatedData['created_by'] =  Auth()->user()->id;
         $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
         $validatedData['dns_data'] = DomainLookUp::get_dns_records($request->url);
-        $validatedData['who_is_data'] = DomainLookUp::get_who_is_data($request->url);
+
+        $validatedData['who_is_data'] = str_replace("\r\n", "</br>", DomainLookUp::get_who_is_data($request->url));
+        // dd($validatedData['who_is_data']);
 
         SiteMap::create($validatedData);
 
@@ -64,7 +66,8 @@ class SiteMapController extends Controller
     {
         $sitemap = SiteMap::with('createdByUser')->findOrFail($id);
         $sitemapData = SitemapGenerator::generateTreeFromSitemapXML($sitemap->xml_path);
-        return view('site-maps.details', compact('sitemap', 'sitemapData'));
+        $dnsInfo = json_decode($sitemap->dns_data, TRUE);
+        return view('site-maps.details', compact('sitemap', 'sitemapData', 'dnsInfo'));
     }
 
     public function destroy(SiteMap $siteMap)
