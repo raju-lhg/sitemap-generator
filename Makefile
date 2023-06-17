@@ -1,26 +1,26 @@
 bash:
-	docker-compose exec lhg-dev-app bash
+	docker-compose exec lhg-smap-app bash
 
 log:
-	docker-compose exec lhg-dev-app bash -c "tail -f storage/logs/laravel.log"
+	docker-compose exec lhg-smap-app bash -c "tail -f storage/logs/laravel.log"
 
 migrate:
-	docker-compose exec lhg-dev-app bash -c "php artisan migrate"
+	docker-compose exec lhg-smap-app bash -c "php artisan migrate"
 
 migrate-fresh:
-	docker-compose exec lhg-dev-app bash -c "php artisan migrate:fresh"
+	docker-compose exec lhg-smap-app bash -c "php artisan migrate:fresh"
 
 migrate-rollback:
-	docker-compose exec lhg-dev-app bash -c "php artisan migrate:rollback"
+	docker-compose exec lhg-smap-app bash -c "php artisan migrate:rollback"
 
 rabbitmq:
-	docker-compose exec lhg-dev-app bash -c "php artisan rabbitmq:consume rabbitmq"
+	docker-compose exec lhg-smap-app bash -c "php artisan rabbitmq:consume rabbitmq"
 
 seed:
-	docker-compose exec lhg-dev-app bash -c "php artisan db:seed"
+	docker-compose exec lhg-smap-app bash -c "php artisan db:seed"
 
 seed-test:
-	docker-compose exec lhg-dev-app bash -c "php artisan db:seed --class=TestSeeder"
+	docker-compose exec lhg-smap-app bash -c "php artisan db:seed --class=TestSeeder"
 
 start:
 	docker-compose up
@@ -32,4 +32,4 @@ build:
 	docker-compose build --no-cache
 
 websocket:
-	docker-compose exec lhg-dev-app bash -c "php artisan websocket:serve"
+	docker-compose exec lhg-smap-app bash -c "php artisan websocket:serve"

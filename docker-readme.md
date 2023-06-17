@@ -8,9 +8,9 @@
 - Update your `.env` file with following - 
 # Update ``.env`` file:
 	DB_CONNECTION=mysql
-    DB_HOST=lhg-dev-db
+    DB_HOST=lhg-smap-db
     DB_PORT=3306
-    DB_DATABASE=lhg-dev-db
+    DB_DATABASE=lhg-smap-db
     DB_USERNAME=root
     DB_PASSWORD=12345678
 
@@ -22,22 +22,22 @@
 This will start application on http://localhost:8001/ and PHP MyAdmin is available on - http://localhost:8003/
 
 ### Stream Log:
-``docker-compose exec lhg-dev-app bash -c "tail -f storage/logs/laravel.log"``
+``docker-compose exec lhg-smap-app bash -c "tail -f storage/logs/laravel.log"``
 
 ### Migrate:
-``docker-compose exec lhg-dev-app bash -c "php artisan migrate"``
+``docker-compose exec lhg-smap-app bash -c "php artisan migrate"``
 
 ### Migrate-fresh:
-``docker-compose exec lhg-dev-app bash -c "php artisan migrate:fresh"``
+``docker-compose exec lhg-smap-app bash -c "php artisan migrate:fresh"``
 
 ### Migrate-rollback:
-``docker-compose exec lhg-dev-app bash -c "php artisan migrate:rollback``
+``docker-compose exec lhg-smap-app bash -c "php artisan migrate:rollback``
 
 ### Seed:
-``docker-compose exec lhg-dev-app bash -c "php artisan db:seed"``
+``docker-compose exec lhg-smap-app bash -c "php artisan db:seed"``
 
 ### Seed-test:
-``docker-compose exec lhg-dev-app bash -c "php artisan db:seed --class=TestSeeder"``
+``docker-compose exec lhg-smap-app bash -c "php artisan db:seed --class=TestSeeder"``
 
 ## Stop Application:
 ``docker-compose stop``  

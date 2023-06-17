@@ -1,15 +1,15 @@
 networks:
-  lhg-dev-network:
+  lhg-smap-network:
     driver: bridge
-    name: lhg-dev-network
+    name: lhg-smap-network
 services:
-  lhg-dev-app:
+  lhg-smap-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: lhg-dev-app
+    container_name: lhg-smap-app
     depends_on:
-      - lhg-dev-db
+      - lhg-smap-db
     deploy:
       resources:
         limits:
@@ -17,9 +17,9 @@ services:
           memory: 600M
     environment:
       OPCACHE_VALIDATE_TIMESTAMPS: 1
-    image: lhg/lhg-dev
+    image: lhg/lhg-smap
     networks:
-      - lhg-dev-network
+      - lhg-smap-network
     ports:
       - 8002:6001
       - 8001:80
@@ -27,45 +27,45 @@ services:
     volumes:
       - .:/var/www/html
       - /var/www/html/vendor
-  lhg-dev-db:
+  lhg-smap-db:
     command: --default-authentication-plugin=mysql_native_password
-    container_name: lhg-dev-db
+    container_name: lhg-smap-db
     deploy:
       resources:
         limits:
           cpus: '0.1'
           memory: 300M
     environment:
-      MYSQL_DATABASE: lhg-dev-db
+      MYSQL_DATABASE: lhg-smap-db
       MYSQL_ROOT_PASSWORD: 12345678
     image: mysql:5.7
     networks:
-      - lhg-dev-network
+      - lhg-smap-network
     restart: unless-stopped
     volumes:
-      - lhg-dev-db:/var/lib/mysql
-  lhg-dev-pma:
-    container_name: lhg-dev-pma
+      - lhg-smap-db:/var/lib/mysql
+  lhg-smap-pma:
+    container_name: lhg-smap-pma
     depends_on:
-      - lhg-dev-db
+      - lhg-smap-db
     deploy:
       resources:
         limits:
           cpus: '0.1'
           memory: 100M
     environment:
-      PMA_HOST: lhg-dev-db
+      PMA_HOST: lhg-smap-db
       PMA_PASSWORD: 12345678
       PMA_USER: root
       UPLOAD_LIMIT: 200M
     image: phpmyadmin/phpmyadmin:5.2.0
     networks:
-      - lhg-dev-network
+      - lhg-smap-network
     ports:
       - 8003:80
     restart: unless-stopped
 version: '3.7'
 volumes:
-  lhg-dev-db:
+  lhg-smap-db:
     driver: local
-    name: lhg-dev-db
+    name: lhg-smap-db

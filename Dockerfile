@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 RUN a2enmod rewrite
 RUN apt-get update -y && apt-get install -y git libicu-dev unzip zip libpng-dev zlib1g-dev libzip-dev
