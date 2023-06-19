@@ -14,11 +14,11 @@
                 </div>
             </div>
 
-            <div style="padding:15px; margin-bottom:10px;" class="p-4 sm:p-8 dark:bg-white shadow sm:rounded-lg">
+            {{-- <div style="padding:15px; margin-bottom:10px;" class="p-4 sm:p-8 dark:bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.delete-user-form')
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </x-app-layout>
