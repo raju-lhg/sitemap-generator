@@ -1,7 +1,5 @@
 <x-app-layout>
     <x-slot name="header">
-        <!-- Include the jsTree CSS -->
-        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.11/themes/default/style.min.css" /> --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" />
         <link rel="stylesheet" href="{{ asset('windmaill') }}/css/custom.css" />
     </x-slot>
@@ -146,51 +144,4 @@
             </div>
         </div>
     </div>
-
-    {{-- <!-- Include the jsTree library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.11/jstree.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-    <script>
-        $(function() {
-            // Initialize the jsTree
-            $('#sitemap').jstree({
-                'core': {
-                    'data': {!! json_encode($sitemapData) !!}
-                },
-                'plugins': ["wholerow"]
-            });
-
-            // Handle download PDF button click event
-            document.getElementById('downloadPDF').addEventListener('click', function() {
-                const element = document.getElementById('sitemap');
-                const options = {
-                    margin: 10,
-                    filename: 'sitemap.pdf',
-                    image: {
-                        type: 'jpeg',
-                        quality: 0.98
-                    },
-                    html2canvas: {
-                        scale: 2
-                    },
-                    jsPDF: {
-                        unit: 'mm',
-                        format: 'a4',
-                        orientation: 'portrait'
-                    }
-                };
-
-                html2pdf().set(options).from(element).save();
-            });
-
-            // Handle download XML button click event
-            document.getElementById('downloadXML').addEventListener('click', function() {
-                // Add your logic to generate and download the XML file
-                // You can use the $sitemap->xml_path and $sitemapData variables here
-                // to generate the XML content and trigger the file download.
-            });
-        });
-    </script> --}}
 </x-app-layout>
