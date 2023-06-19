@@ -215,7 +215,7 @@ class SitemapGenerator
             if (!empty($node['children'])) {
                 $childrenCount = count($node['children']);
                 $customTreeNode['children'] = self::convertToCustomTreeFormat($node['children']);
-                $customTreeNode['label'] .= ' (' . $childrenCount . ')';
+                // $customTreeNode['label'] .= ' (' . $childrenCount . ')';
             }
 
             $customTreeData[] = $customTreeNode;
@@ -224,5 +224,24 @@ class SitemapGenerator
         return $customTreeData;
     }
 
+    public static function generateTreeHtml($nodes) {
+        $html = '<ul>';
 
+        foreach ($nodes as $node) {
+            $html .= '<li>';
+
+            if (!empty($node['children'])) {
+                $html .= '<i class="fa fa-folder-open"></i> ' . $node['label'] . ' <span>- ' . count($node['children']) . '</span>';
+                $html .= self::generateTreeHtml($node['children']);
+            } else {
+                $html .= '<i class="fab fa-html5"></i> ' . $node['label'];
+            }
+
+            $html .= '</li>';
+        }
+
+        $html .= '</ul>';
+
+        return $html;
+    }
 }
