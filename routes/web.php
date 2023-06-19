@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SiteMapController;
 use App\Services\SitemapGenerator;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SiteMapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,4 +39,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/site-maps/{siteMap}', [SiteMapController::class, 'destroy'])->name('site-maps.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
