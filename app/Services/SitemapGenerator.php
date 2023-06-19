@@ -6,6 +6,8 @@ use DOMDocument;
 use SimpleXMLElement;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class SitemapGenerator
 {
@@ -243,5 +245,30 @@ class SitemapGenerator
         $html .= '</ul>';
 
         return $html;
+    }
+
+    public static function exportToPDF($xml_path)
+    {
+
+        $customTree = SitemapGenerator::generateTreeHtml(SitemapGenerator::generateCustomTreeFromSitemapXML($xml_path));
+        // Get the HTML content from the view file
+        $customTree = view('site-maps.pdf', $customTree)->render();
+
+        // Create a new Dompdf instance
+        $pdf = new Dompdf();
+
+        // Optional: Set additional options, such as the font path
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $pdf->setOptions($options);
+
+        // Load HTML content into Dompdf
+        $pdf->loadHtml($customTree);
+
+        // Render the PDF
+        $pdf->render();
+
+        // Output the generated PDF to the browser
+        $pdf->stream('tree.pdf');
     }
 }

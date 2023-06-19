@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/site-maps/{siteMap}/edit', [SiteMapController::class, 'edit'])->name('site-maps.edit');
     Route::put('/site-maps/{siteMap}', [SiteMapController::class, 'update'])->name('site-maps.update');
     Route::get('site-maps/{id}', [SiteMapController::class, 'show'])->name('site-maps.show');
+    Route::get('site-maps/{id}/export', [SiteMapController::class, 'exportPDF'])->name('site-maps.exportPDF');
     Route::delete('/site-maps/{siteMap}', [SiteMapController::class, 'destroy'])->name('site-maps.destroy');
 });
 

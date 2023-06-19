@@ -68,7 +68,15 @@ class SiteMapController extends Controller
         // $customTree = json_encode(SitemapGenerator::generateCustomTreeFromSitemapXML($sitemap->xml_path));
         $customTree = SitemapGenerator::generateTreeHtml(SitemapGenerator::generateCustomTreeFromSitemapXML($sitemap->xml_path));
         $dnsInfo = json_decode($sitemap->dns_data, TRUE);
+        // return view('site-maps.pdf', compact('sitemap', 'sitemapData', 'dnsInfo', 'customTree'));
         return view('site-maps.details', compact('sitemap', 'sitemapData', 'dnsInfo', 'customTree'));
+    }
+
+    public function exportPDF($id)
+    {
+        $sitemap = SiteMap::with('createdByUser')->findOrFail($id);
+        $customTree = SitemapGenerator::exportPDF($sitemap);
+        return view('site-maps.pdf', compact('customTree'));
     }
 
     public function destroy(SiteMap $siteMap)

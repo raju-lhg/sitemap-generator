@@ -29,25 +29,6 @@
                             <!-- Whois info content -->
                             <div class="tree mt-8">
                                 {!! $customTree !!}
-                                {{-- <ul>
-                                    <li><i class="fa fa-folder-open"></i> Project
-                                        <ul>
-                                            <li><i class="fa fa-folder-open"></i> Opened Folder <span>- 15kb</span>
-                                                <ul>
-                                                    <li><i class="fa fa-folder-open"></i> css
-                                                        <ul>
-                                                            <li><i class="fa fa-code"></i> CSS Files <span>- 3kb</span></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><i class="fa fa-folder"></i> Folder close <span>- 10kb</span></li>
-                                                    <li><i class="fab fa-html5"></i> index.html</li>
-                                                    <li><i class="fa fa-picture-o"></i> favicon.ico</li>
-                                                </ul>
-                                            </li>
-                                            <li><i class="fa fa-folder"></i> Folder close <span>- 420kb</span></li>
-                                        </ul>
-                                    </li>
-                                </ul> --}}
                             </div>
                         </div>
                     </div>
