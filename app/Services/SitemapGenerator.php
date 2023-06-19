@@ -233,7 +233,7 @@ class SitemapGenerator
             $html .= '<li>';
 
             if (!empty($node['children'])) {
-                $html .= '<i class="fa fa-folder-open"></i> ' . $node['label'] . ' <span>- ' . count($node['children']) . '</span>';
+                $html .= '<i class="fa fa-folder-open hasChildren"></i> ' . $node['label'] . ' <span>- ' . count($node['children']) . '</span>';
                 $html .= self::generateTreeHtml($node['children']);
             } else {
                 $html .= '<i class="fab fa-html5"></i> ' . $node['label'];
@@ -251,8 +251,17 @@ class SitemapGenerator
     {
 
         $customTree = SitemapGenerator::generateTreeHtml(SitemapGenerator::generateCustomTreeFromSitemapXML($xml_path));
-        // Get the HTML content from the view file
-        $customTree = view('site-maps.pdf', $customTree)->render();
+
+        // Retrieve the data you want to pass to the view
+        $data = [
+            'customTree' => $customTree
+        ];
+
+        // Get the view content with the passed data
+        $view = view('site-maps.pdf', $data);
+
+        // Render the view to HTML
+        $html = $view->render();
 
         // Create a new Dompdf instance
         $pdf = new Dompdf();
@@ -263,7 +272,7 @@ class SitemapGenerator
         $pdf->setOptions($options);
 
         // Load HTML content into Dompdf
-        $pdf->loadHtml($customTree);
+        $pdf->loadHtml($html);
 
         // Render the PDF
         $pdf->render();
