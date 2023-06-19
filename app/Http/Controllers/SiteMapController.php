@@ -65,8 +65,9 @@ class SiteMapController extends Controller
     {
         $sitemap = SiteMap::with('createdByUser')->findOrFail($id);
         $sitemapData = SitemapGenerator::generateTreeFromSitemapXML($sitemap->xml_path);
+        $customTree = json_encode(SitemapGenerator::generateCustomTreeFromSitemapXML($sitemap->xml_path));
         $dnsInfo = json_decode($sitemap->dns_data, TRUE);
-        return view('site-maps.details', compact('sitemap', 'sitemapData', 'dnsInfo'));
+        return view('site-maps.details', compact('sitemap', 'sitemapData', 'dnsInfo', 'customTree'));
     }
 
     public function destroy(SiteMap $siteMap)

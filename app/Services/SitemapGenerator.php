@@ -98,6 +98,8 @@ class SitemapGenerator
 
     public static function generateTreeFromSitemapXML($sitemapXML)
     {
+
+        // \Log::info(self::generateCustomTreeFromSitemapXML($sitemapXML));
         $filePath = public_path($sitemapXML);
 
         if (!file_exists($filePath)) {
@@ -159,5 +161,68 @@ class SitemapGenerator
 
         return $jsTreeData;
     }
+
+    public static function generateCustomTreeFromSitemapXML($sitemapXML)
+    {
+        $filePath = public_path($sitemapXML);
+
+        if (!file_exists($filePath)) {
+            // Handle the case where the XML file does not exist
+            return null;
+        }
+
+        $xmlString = file_get_contents($filePath);
+
+        // Decode HTML entities
+        $decodedXML = html_entity_decode($xmlString);
+
+        // Load the XML string
+        $xml = simplexml_load_string($decodedXML);
+
+        // Create the tree nodes
+        $treeNodes = [];
+        foreach ($xml->url as $url) {
+            $loc = (string) $url->loc;
+            $pathParts = explode('/', trim(parse_url($loc, PHP_URL_PATH), '/'));
+
+            $currentNode = &$treeNodes;
+            foreach ($pathParts as $part) {
+                $nodeKey = urlencode($part);
+                if (!isset($currentNode[$nodeKey])) {
+                    $currentNode[$nodeKey] = [
+                        'label' => $part,
+                        'children' => []
+                    ];
+                }
+                $currentNode = &$currentNode[$nodeKey]['children'];
+            }
+        }
+
+        // Convert the tree nodes into custom format
+        $customTreeData = self::convertToCustomTreeFormat($treeNodes);
+
+        return $customTreeData;
+    }
+
+    public static function convertToCustomTreeFormat($nodes)
+    {
+        $customTreeData = [];
+        foreach ($nodes as $key => $node) {
+            $customTreeNode = [
+                'label' => $node['label']
+            ];
+
+            if (!empty($node['children'])) {
+                $childrenCount = count($node['children']);
+                $customTreeNode['children'] = self::convertToCustomTreeFormat($node['children']);
+                $customTreeNode['label'] .= ' (' . $childrenCount . ')';
+            }
+
+            $customTreeData[] = $customTreeNode;
+        }
+
+        return $customTreeData;
+    }
+
 
 }
