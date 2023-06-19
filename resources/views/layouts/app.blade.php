@@ -5,6 +5,7 @@
     @include('layouts.partials.meta')
 
     @include('layouts.partials.styles')
+    {{ $header ?? '' }}
 
 </head>
 

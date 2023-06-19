@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <!-- Include the jsTree CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.11/themes/default/style.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" />
+        <link rel="stylesheet" href="{{ asset('windmaill') }}/css/custom.css" />
     </x-slot>
 
     <div class="py-12">
@@ -20,6 +20,36 @@
                         <p class="dark:text-gray-200"><strong>XML Path:</strong> {{ $sitemap->xml_path }}</p>
                         <p class="dark:text-gray-200"><strong>Created At:</strong> {{ $sitemap->created_at }}</p>
                         <p class="dark:text-gray-200"><strong>Updated At:</strong> {{ $sitemap->updated_at }}</p>
+                    </div>
+
+                    <!-- Visual Sitemap -->
+                    <h2 class="text-lg font-semibold dark:text-gray-200 mt-8">Tree</h2>
+                    <div class="mt-4">
+                        <div class="dark:bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200 p-4">
+                            <!-- Whois info content -->
+                            <div class="tree mt-8">
+                                {!! $customTree !!}
+                                {{-- <ul>
+                                    <li><i class="fa fa-folder-open"></i> Project
+                                        <ul>
+                                            <li><i class="fa fa-folder-open"></i> Opened Folder <span>- 15kb</span>
+                                                <ul>
+                                                    <li><i class="fa fa-folder-open"></i> css
+                                                        <ul>
+                                                            <li><i class="fa fa-code"></i> CSS Files <span>- 3kb</span></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><i class="fa fa-folder"></i> Folder close <span>- 10kb</span></li>
+                                                    <li><i class="fab fa-html5"></i> index.html</li>
+                                                    <li><i class="fa fa-picture-o"></i> favicon.ico</li>
+                                                </ul>
+                                            </li>
+                                            <li><i class="fa fa-folder"></i> Folder close <span>- 420kb</span></li>
+                                        </ul>
+                                    </li>
+                                </ul> --}}
+                            </div>
+                        </div>
                     </div>
 
                     <!-- DNS Info -->
@@ -91,8 +121,13 @@
                     </div>
 
                     <!-- Visual Sitemap -->
-                    <h2 class="text-lg font-semibold dark:text-gray-200 mt-8">Sitemap Tree</h2>
-                    <div id="sitemap" class="mt-8"></div>
+                    <h2 class="text-lg font-semibold dark:text-gray-200 mt-8">Site map</h2>
+                    <div class="mt-4">
+                        <div class="dark:bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200 p-4">
+                            <!-- Whois info content -->
+                            <div id="sitemap" class="mt-8"></div>
+                        </div>
+                    </div>
 
                     <!-- Export buttons -->
                     <div class="flex justify-between mt-4">
@@ -109,51 +144,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Include the jsTree library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.11/jstree.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-    <script>
-        $(function() {
-            // Initialize the jsTree
-            $('#sitemap').jstree({
-                'core': {
-                    'data': {!! json_encode($sitemapData) !!}
-                },
-                'plugins': ["wholerow"]
-            });
-
-            // Handle download PDF button click event
-            document.getElementById('downloadPDF').addEventListener('click', function() {
-                const element = document.getElementById('sitemap');
-                const options = {
-                    margin: 10,
-                    filename: 'sitemap.pdf',
-                    image: {
-                        type: 'jpeg',
-                        quality: 0.98
-                    },
-                    html2canvas: {
-                        scale: 2
-                    },
-                    jsPDF: {
-                        unit: 'mm',
-                        format: 'a4',
-                        orientation: 'portrait'
-                    }
-                };
-
-                html2pdf().set(options).from(element).save();
-            });
-
-            // Handle download XML button click event
-            document.getElementById('downloadXML').addEventListener('click', function() {
-                // Add your logic to generate and download the XML file
-                // You can use the $sitemap->xml_path and $sitemapData variables here
-                // to generate the XML content and trigger the file download.
-            });
-        });
-    </script>
 </x-app-layout>
