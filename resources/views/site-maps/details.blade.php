@@ -6,41 +6,51 @@
 
     <div class="py-12">
         <div class="max-w-full mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="dark:bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6">
-                    <h2 class="text-lg font-semibold text-gray-800 mb-4">
+                    <h2 class="text-lg font-semibold dark:text-gray-200 mb-4">
                         Sitemap Details
                     </h2>
                     <div>
-                        <p><strong>ID:</strong> {{ $sitemap->id }}</p>
-                        <p><strong>URL:</strong> {{ $sitemap->url }}</p>
-                        <p><strong>Note:</strong> {{ $sitemap->note }}</p>
-                        <p><strong>Created By:</strong> {{ $sitemap->createdByUser->name }}</p>
-                        <p><strong>XML Path:</strong> {{ $sitemap->xml_path }}</p>
-                        <p><strong>Created At:</strong> {{ $sitemap->created_at }}</p>
-                        <p><strong>Updated At:</strong> {{ $sitemap->updated_at }}</p>
+                        <p class="dark:text-gray-200"><strong>ID:</strong> {{ $sitemap->id }}</p>
+                        <p class="dark:text-gray-200"><strong>URL:</strong> {{ $sitemap->url }}</p>
+                        <p class="dark:text-gray-200"><strong>Note:</strong> {{ $sitemap->note }}</p>
+                        <p class="dark:text-gray-200"><strong>Created By:</strong> {{ $sitemap->createdByUser->name }}
+                        </p>
+                        <p class="dark:text-gray-200"><strong>XML Path:</strong> {{ $sitemap->xml_path }}</p>
+                        <p class="dark:text-gray-200"><strong>Created At:</strong> {{ $sitemap->created_at }}</p>
+                        <p class="dark:text-gray-200"><strong>Updated At:</strong> {{ $sitemap->updated_at }}</p>
                     </div>
 
                     <!-- DNS Info -->
-                    <h2 class="text-lg font-semibold text-gray-800 mt-8">DNS Info</h2>
+                    <h2 class="text-lg font-semibold dark:text-gray-200 mt-8">DNS Info</h2>
                     <div class="mt-4">
-                        <div class="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
-                            <table class="min-w-full divide-y divide-gray-200">
+                        <div class="shadow overflow-hidden sm:rounded-lg border border-gray-200">
+                            <table class="min-w-full divide-y divide-gray-200 dark:bg-white">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Records</th>
-                                        <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TTL</th>
-                                        <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
-                                        <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Entries/Values</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 dark:bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Records</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 dark:bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            TTL</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 dark:bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Class</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 dark:bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Entries/Values</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody class="divide-y divide-gray-200">
                                     @foreach ($dnsInfo as $recordType => $record)
                                         <tr>
-                                            <td class="px-4 py-2">{{ $record['data'][0]['type'] }}</td>
-                                            <td class="px-4 py-2">{{ $record['ttl'] }}</td>
-                                            <td class="px-4 py-2">{{ $record['class'] }}</td>
-                                            <td class="px-4 py-2">
+                                            <td class="dark:text-gray-200 px-4 py-2">{{ $record['data'][0]['type'] }}
+                                            </td>
+                                            <td class="dark:text-gray-200 px-4 py-2">{{ $record['ttl'] }}</td>
+                                            <td class="dark:text-gray-200 px-4 py-2">{{ $record['class'] }}</td>
+                                            <td class="dark:text-gray-200 px-4 py-2">
                                                 @if ($record['data'][0]['type'] === 'A')
                                                     @foreach ($record['data'] as $data)
                                                         <p> {{ $data['host'] }}</p>
@@ -72,24 +82,26 @@
                     </div>
 
                     <!-- Whois Info -->
-                    <h2 class="text-lg font-semibold text-gray-800 mt-8">Whois Info</h2>
+                    <h2 class="text-lg font-semibold dark:text-gray-200 mt-8">Whois Info</h2>
                     <div class="mt-4">
-                        <div class="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200 p-4">
+                        <div class="dark:bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200 p-4">
                             <!-- Whois info content -->
-                            <p>{!! $sitemap->who_is_data !!}</p>
+                            <p class="dark:text-gray-200">{!! $sitemap->who_is_data !!}</p>
                         </div>
                     </div>
 
                     <!-- Visual Sitemap -->
-                    <h2 class="text-lg font-semibold text-gray-800 mt-8">Sitemap Tree</h2>
+                    <h2 class="text-lg font-semibold dark:text-gray-200 mt-8">Sitemap Tree</h2>
                     <div id="sitemap" class="mt-8"></div>
 
                     <!-- Export buttons -->
                     <div class="flex justify-between mt-4">
-                        <button id="downloadPDF" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <button id="downloadPDF"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Download as PDF
                         </button>
-                        <button id="downloadXML" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        <button id="downloadXML"
+                            class="dark:bg-green-500 hover:bg-green-700 dark:text-white font-bold py-2 px-4 rounded">
                             Download XML
                         </button>
                     </div>
@@ -119,9 +131,18 @@
                 const options = {
                     margin: 10,
                     filename: 'sitemap.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 2
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'portrait'
+                    }
                 };
 
                 html2pdf().set(options).from(element).save();
