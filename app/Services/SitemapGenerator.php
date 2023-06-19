@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\SiteMap;
 use DOMDocument;
 use SimpleXMLElement;
 use Illuminate\Support\Str;
@@ -247,14 +248,16 @@ class SitemapGenerator
         return $html;
     }
 
-    public static function exportToPDF($xml_path)
+    public static function exportToPDF(SiteMap $sitemap)
     {
-
-        $customTree = SitemapGenerator::generateTreeHtml(SitemapGenerator::generateCustomTreeFromSitemapXML($xml_path));
+        $customTree = SitemapGenerator::generateTreeHtml(SitemapGenerator::generateCustomTreeFromSitemapXML($sitemap->xml_path));
+        $dnsInfo = json_decode($sitemap->dns_data, TRUE);
 
         // Retrieve the data you want to pass to the view
         $data = [
-            'customTree' => $customTree
+            'customTree' => $customTree,
+            'dnsInfo' => $dnsInfo,
+            'sitemap' => $sitemap
         ];
 
         // Get the view content with the passed data

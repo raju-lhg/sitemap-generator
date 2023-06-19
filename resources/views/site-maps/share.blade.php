@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blank Page with Cards - Tailwind CSS</title>
+  <title>{{ $sitemap->url }} :: LHG Sitemap Generator</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" />
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@3.5.1/dist/clipboard.min.js"></script>
     <style>
         .tree {
             position: relative;
@@ -89,8 +90,16 @@
 <body>
   <div class="min-h-screen flex items-center justify-center bg-gray-100">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="bg-white shadow-md p-8 rounded-lg">
+        <!-- Target -->
+        <input id="foo" value="https://github.com/zenorocha/clipboard.js.git">
+
+        <!-- Trigger -->
+        <button class="btn" data-clipboard-target="#foo">
+            <img src="assets/clippy.svg" alt="Copy to clipboard">
+        </button>
+      <div class="bg-white shadow-md p-8 rounded-lg" id="dnsinfo">
         <h1 class="text-2xl font-semibold mb-4">DNS Info</h1>
+        <p><strong>Domain</strong>: {{ $sitemap->url }}</p>
         <table class="min-w-full divide-y divide-gray-200 dark:bg-white">
             <thead>
                 <tr>
@@ -141,11 +150,11 @@
             </tbody>
         </table>
       </div>
-      <div class="bg-white shadow-md p-8 rounded-lg">
+      <div class="bg-white shadow-md p-8 rounded-lg" id="whoinfo" >
         <h1 class="text-2xl font-semibold mb-4">Who is Info</h1>
         <p class="dark:text-gray-200">{!! $sitemap->who_is_data !!}</p>
       </div>
-      <div class="bg-white shadow-md p-8 rounded-lg">
+      <div class="bg-white shadow-md p-8 rounded-lg" id="sitemaptree"  >
         <h1 class="text-2xl font-semibold mb-4">Sitemap</h1>
         <div class="tree">
             {!! $customTree !!}
@@ -154,5 +163,14 @@
     </div>
   </div>
 </body>
+<script>
+    $(document).ready(function() {
+        // Collapse/Expand tree nodes
+        $('.tree i.hasChildren').click(function() {
+            $(this).toggleClass('fa-folder-open fa-folder');
+            $(this).siblings('ul').toggle();
+        });
+    });
+</script>
 
 </html>

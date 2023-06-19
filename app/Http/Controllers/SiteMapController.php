@@ -73,7 +73,7 @@ class SiteMapController extends Controller
     public function exportPDF($id)
     {
         $sitemap = SiteMap::with('createdByUser')->findOrFail($id);
-        return $customTree = SitemapGenerator::exportToPDF($sitemap->xml_path);
+        return $customTree = SitemapGenerator::exportToPDF($sitemap);
         return view('site-maps.pdf', compact('customTree'));
     }
 
