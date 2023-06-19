@@ -31,6 +31,7 @@ class SiteMapController extends Controller
         $validatedData['created_by'] =  Auth()->user()->id;
         $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
         $validatedData['dns_data'] = DomainLookUp::get_dns_records($request->url);
+        $validatedData['public_id'] = $this->generateRandomString(8);
 
         $validatedData['who_is_data'] = str_replace("\r\n", "</br>", DomainLookUp::get_who_is_data($request->url));
         // dd($validatedData['who_is_data']);
@@ -64,19 +65,29 @@ class SiteMapController extends Controller
     public function show($id)
     {
         $sitemap = SiteMap::with('createdByUser')->findOrFail($id);
-        $sitemapData = SitemapGenerator::generateTreeFromSitemapXML($sitemap->xml_path);
-        // $customTree = json_encode(SitemapGenerator::generateCustomTreeFromSitemapXML($sitemap->xml_path));
         $customTree = SitemapGenerator::generateTreeHtml(SitemapGenerator::generateCustomTreeFromSitemapXML($sitemap->xml_path));
         $dnsInfo = json_decode($sitemap->dns_data, TRUE);
-        // return view('site-maps.pdf', compact('sitemap', 'sitemapData', 'dnsInfo', 'customTree'));
-        return view('site-maps.details', compact('sitemap', 'sitemapData', 'dnsInfo', 'customTree'));
+        return view('site-maps.details', compact('sitemap', 'dnsInfo', 'customTree'));
     }
 
     public function exportPDF($id)
     {
         $sitemap = SiteMap::with('createdByUser')->findOrFail($id);
-        $customTree = SitemapGenerator::exportToPDF($sitemap->xml_path);
+        return $customTree = SitemapGenerator::exportToPDF($sitemap->xml_path);
         return view('site-maps.pdf', compact('customTree'));
+    }
+
+    public function shareMap($publicId)
+    {
+        $sitemap = SiteMap::with('createdByUser')->where('public_id', $publicId)->first();
+        if($sitemap){
+            $customTree = SitemapGenerator::generateTreeHtml(SitemapGenerator::generateCustomTreeFromSitemapXML($sitemap->xml_path));
+            $dnsInfo = json_decode($sitemap->dns_data, TRUE);
+            return view('site-maps.share', compact('customTree', 'dnsInfo', 'sitemap'));
+        }
+        else{
+            return redirect()->route('home');
+        }
     }
 
     public function destroy(SiteMap $siteMap)
@@ -92,5 +103,17 @@ class SiteMapController extends Controller
         $siteMap->delete();
 
         return redirect()->route('site-maps.index')->with('success', 'Site Map deleted successfully.');
+    }
+
+    function generateRandomString($length) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+        $charLength = strlen($characters);
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charLength - 1)];
+        }
+
+        return $randomString;
     }
 }

@@ -5,6 +5,7 @@
     <title>Custom Tree Structure (Tailwind CSS)</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <style>
         .tree {
             position: relative;
@@ -88,5 +89,14 @@
         {!! $customTree !!}
     </div>
 </body>
+<script>
+    $(document).ready(function() {
+        // Collapse/Expand tree nodes
+        $('.tree i.hasChildren').click(function() {
+            $(this).toggleClass('fa-folder-open fa-folder');
+            $(this).siblings('ul').toggle();
+        });
+    });
+</script>
 
 </html>

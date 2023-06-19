@@ -9,7 +9,7 @@ class SiteMap extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', 'note', 'created_by', 'xml_path', 'dns_data', 'who_is_data'];
+    protected $fillable = ['url', 'note', 'created_by', 'xml_path', 'dns_data', 'who_is_data', 'public_id'];
 
     public function createdByUser()
     {

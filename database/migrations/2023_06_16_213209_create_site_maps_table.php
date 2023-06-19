@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->string('xml_path');
+            $table->string('public_id');
             $table->json('dns_data')->nullable();
             $table->longText('who_is_data')->nullable();
             $table->timestamps();

@@ -261,7 +261,7 @@ class SitemapGenerator
         $view = view('site-maps.pdf', $data);
 
         // Render the view to HTML
-        $html = $view->render();
+        return $html = $view->render();
 
         // Create a new Dompdf instance
         $pdf = new Dompdf();
