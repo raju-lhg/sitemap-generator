@@ -33,7 +33,81 @@
                         </div>
                     </div>
 
-                    <!-- DNS Info -->
+                    <div class="mt-4">
+                        <div class="grid gap-6 mb-8 md:grid-cols-2">
+                            <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                                DNS
+                                </h4>
+                                <table class="min-w-full divide-y divide-gray-200 dark:bg-white">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"
+                                                class="px-6 py-3 dark:bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Records</th>
+                                            <th scope="col"
+                                                class="px-6 py-3 dark:bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                TTL</th>
+                                            <th scope="col"
+                                                class="px-6 py-3 dark:bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Class</th>
+                                            <th scope="col"
+                                                class="px-6 py-3 dark:bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Entries/Values</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                        @foreach ($dnsInfo as $recordType => $record)
+                                            <tr>
+                                                <td class="dark:text-gray-200 px-4 py-2">{{ $record['data'][0]['type'] }}
+                                                </td>
+                                                <td class="dark:text-gray-200 px-4 py-2">{{ $record['ttl'] }}</td>
+                                                <td class="dark:text-gray-200 px-4 py-2">{{ $record['class'] }}</td>
+                                                <td class="dark:text-gray-200 px-4 py-2">
+                                                    @if ($record['data'][0]['type'] === 'A')
+                                                        @foreach ($record['data'] as $data)
+                                                            <p> {{ $data['host'] }}</p>
+                                                        @endforeach
+                                                    @elseif (in_array($record['data'][0]['type'], ['NS', 'MX']))
+                                                        @foreach ($record['data'] as $data)
+                                                            <p>{{ $data['target'] }}</p>
+                                                        @endforeach
+                                                    @elseif ($record['data'][0]['type'] === 'SOA')
+                                                        @foreach ($record['data'] as $data)
+                                                            <p><em>Email:</em> {{ $data['mname'] }}</p>
+                                                            <p><em>Serial:</em> {{ $data['serial'] }}</p>
+                                                            <p><em>Refresh:</em> {{ $data['refresh'] }}</p>
+                                                            <p><em>Retry:</em> {{ $data['retry'] }}</p>
+                                                            <p><em>Expiry:</em> {{ $data['expire'] }}</p>
+                                                            <p><em>Minimum TTL:</em> {{ $data['minimum-ttl'] }}</p>
+                                                        @endforeach
+                                                    @elseif ($recordType === 'txt')
+                                                        @foreach ($record['data'] as $data)
+                                                            <p> {{ $data['txt'] ?? '' }}</p>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                                Whois
+                                </h4>
+
+                                <div class="dark:bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200 p-4">
+                                    <!-- Whois info content -->
+                                    <p class="dark:text-gray-200">{!! $sitemap->who_is_data !!}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <!-- DNS Info -->
                     <h2 class="text-lg font-semibold dark:text-gray-200 mt-8">DNS Info</h2>
                     <div class="mt-4">
                         <div class="shadow overflow-hidden sm:rounded-lg border border-gray-200">
@@ -99,16 +173,7 @@
                             <!-- Whois info content -->
                             <p class="dark:text-gray-200">{!! $sitemap->who_is_data !!}</p>
                         </div>
-                    </div>
-
-                    <!-- Visual Sitemap -->
-                    <h2 class="text-lg font-semibold dark:text-gray-200 mt-8">Site map</h2>
-                    <div class="mt-4">
-                        <div class="dark:bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200 p-4">
-                            <!-- Whois info content -->
-                            <div id="sitemap" class="mt-8"></div>
-                        </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Export buttons -->
                     <div class="flex justify-between mt-4">

@@ -1,4 +1,7 @@
 
+.dns-table{
+    white-space: normal;
+}
 .tree {
     position: relative;
     margin-top: 20px;
