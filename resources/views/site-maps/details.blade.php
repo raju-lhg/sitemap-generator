@@ -39,7 +39,7 @@
                                 <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
                                 DNS
                                 </h4>
-                                <table class="min-w-full divide-y divide-gray-200 dark:bg-white">
+                                <table class="min-w-full divide-y divide-gray-200 dark:bg-white" id="dns-table">
                                     <thead>
                                         <tr>
                                             <th scope="col"

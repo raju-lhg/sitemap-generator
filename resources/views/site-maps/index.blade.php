@@ -53,7 +53,7 @@
 
                                     <td class="px-4 py-3">
                                         <div class="flex items-center space-x-4 text-sm">
-                                            <a href="{{ route('site-maps.show', $siteMap->id) }}"
+                                            <a data-link="{{ route('site-maps.show', $siteMap->id) }}" href="#" onclick="copyLinkToClipboard(this)"
                                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                 aria-label="Edit">
 
@@ -106,4 +106,31 @@
 
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function copyLinkToClipboard(button) {
+                var link = button.getAttribute("data-link");
+
+                /* Create a temporary range */
+                var tempRange = document.createRange();
+                tempRange.selectNode(button);
+
+                /* Add the temporary range to the selection */
+                var selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(tempRange);
+
+                /* Copy the selection to the clipboard */
+                document.execCommand("copy");
+
+                /* Clear the selection */
+                selection.removeAllRanges();
+
+                /* Alert the copied link */
+                alert("Copied to clipboard: " + link);
+            }
+        });
+    </script>
 </x-app-layout>
