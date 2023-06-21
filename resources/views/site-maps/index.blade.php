@@ -33,7 +33,7 @@
                                         {{ $siteMap->id }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        {{ $siteMap->url }}
+                                        <a href="{{ route('site-maps.show', $siteMap->id) }}">{{ $siteMap->url }}</a>
                                     </td>
                                     <td class="px-4 py-3 text-xs">
                                         {{ $siteMap->note }}
