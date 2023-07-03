@@ -24,7 +24,7 @@ export class AppController {
     @Query('noQuery') noQuery: string,
   ) {
     const startTime = +new Date();
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     try {
       const visitedLinks = new Set<string>();
       const page = await browser.newPage();
