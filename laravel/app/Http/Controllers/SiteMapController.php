@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GenerateSitemapJob;
 use App\Models\SiteMap;
 use App\Services\DomainLookUp;
 use App\Services\SitemapGenerator;
@@ -52,6 +53,10 @@ class SiteMapController extends Controller
         $validatedData = $request->validate([
             'url' => 'required'
         ]);
+
+        GenerateSitemapJob::dispatch($request->url);
+
+        return response()->json(['message' => 'Sitemap generation enqueued']);
 
         $validatedData['created_by'] =  Auth()->user()->id;
         $validatedData['xml_path'] =  SitemapGenerator::generate_sitemap($request->url);
