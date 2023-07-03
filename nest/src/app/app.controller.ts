@@ -24,7 +24,7 @@ export class AppController {
     @Query('noQuery') noQuery: string,
   ) {
     const startTime = +new Date();
-    const browser = await puppeteer.launch({ headless: 'new' });
+    const browser = await puppeteer.launch({ headless: false });
     try {
       const visitedLinks = new Set<string>();
       const page = await browser.newPage();
@@ -47,6 +47,7 @@ export class AppController {
           !visitedLinks.has(siteLink) &&
           siteLink.includes(website) &&
           !siteLink.includes('mailto:') &&
+          !siteLink.includes('tel:') &&
           !['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'xlxs', 'xls'].some(
             (s) => siteLink.toLowerCase().endsWith(s),
           )
@@ -58,7 +59,7 @@ export class AppController {
 
           await page.goto(siteLink, {
             waitUntil: 'networkidle0',
-            timeout: 30 * 1000,
+            timeout: 60 * 1000,
           });
           await page
             .$$eval('a', (anchors: any) =>

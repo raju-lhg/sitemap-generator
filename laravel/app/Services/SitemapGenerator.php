@@ -42,7 +42,7 @@ class SitemapGenerator
         \Log::info(['anchor_tags' => $anchor_tags]);
         foreach ($anchor_tags as $anchor) {
             $href = $anchor;
-            if ($href && !self::startsWith($href, '#') && !self::startsWith($href, 'mailto:')) {
+            if ($href && !self::startsWith($href, '#') && !self::startsWith($href, 'mailto:') && !self::startsWith($href, 'tel:')) {
                 $abs_url = self::urljoin($siteURL, $href);  // Resolve relative URLs
 
                 // Check if the resolved URL has the same hostname as the provided URL
@@ -51,7 +51,7 @@ class SitemapGenerator
                     $url_element->addChild('loc', $abs_url);
 
                     // Recursively crawl the child URL
-                    self::generate_sitemap($abs_url);
+                    // self::generate_sitemap($abs_url);
                 }
             }
         }
