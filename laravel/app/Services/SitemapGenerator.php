@@ -12,8 +12,10 @@ use Dompdf\Options;
 
 class SitemapGenerator
 {
-    public static function generate_sitemap($url)
+    public static function generate_sitemap($siteURL)
     {
+
+        $url = "http://localhost:3000/website?q=".$siteURL;
         // Initialize cURL session
         $curl = curl_init();
 
@@ -35,33 +37,21 @@ class SitemapGenerator
 
         // Create a new SimpleXMLElement
         $sitemap = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
-
-        // Parse the HTML
-        $dom = new DOMDocument;
-        libxml_use_internal_errors(true);  // Disable error reporting for HTML parsing
-        $dom->loadHTML($html_content);
-        libxml_clear_errors();
-
-        // Find all anchor tags containing URLs
-        $anchor_tags = $dom->getElementsByTagName('a');
-
-        // Get the hostname of the provided URL
-        $hostname = parse_url($url, PHP_URL_HOST);
-
-        // Add the provided URL to the sitemap
-        $url_element = $sitemap->addChild('url');
-        $url_element->addChild('loc', $url);
-
-        // Add matching internal URLs to the sitemap
+        $hostname = parse_url($siteURL, PHP_URL_HOST);
+        $anchor_tags = json_decode($html_content);
+        \Log::info(['anchor_tags' => $anchor_tags]);
         foreach ($anchor_tags as $anchor) {
-            $href = $anchor->getAttribute('href');
+            $href = $anchor;
             if ($href && !self::startsWith($href, '#') && !self::startsWith($href, 'mailto:')) {
-                $abs_url = self::urljoin($url, $href);  // Resolve relative URLs
+                $abs_url = self::urljoin($siteURL, $href);  // Resolve relative URLs
 
                 // Check if the resolved URL has the same hostname as the provided URL
                 if (parse_url($abs_url, PHP_URL_HOST) === $hostname) {
                     $url_element = $sitemap->addChild('url');
                     $url_element->addChild('loc', $abs_url);
+
+                    // Recursively crawl the child URL
+                    self::generate_sitemap($abs_url);
                 }
             }
         }
@@ -74,11 +64,12 @@ class SitemapGenerator
         if (!File::isDirectory($folderPath)) {
             File::makeDirectory($folderPath, $mode = 0755, true, true);
         }
-        $sitemapFileName = 'sitemaps/'.Str::slug($hostname) . '.xml';
+        $sitemapFileName = 'sitemaps/' . Str::slug($hostname) . '.xml';
         file_put_contents($sitemapFileName, $sitemap_xml);
 
         return $sitemapFileName;
     }
+
 
     public static function urljoin($base, $relative)
     {
