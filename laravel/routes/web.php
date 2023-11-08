@@ -4,6 +4,7 @@ use App\Services\SitemapGenerator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiteMapController;
+use App\Http\Controllers\SoWGeneratorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('site-maps/{id}', [SiteMapController::class, 'show'])->name('site-maps.show');
     // Route::get('site-maps/{id}/export', [SiteMapController::class, 'exportPDF'])->name('site-maps.exportPDF');
     Route::delete('/site-maps/{siteMap}', [SiteMapController::class, 'destroy'])->name('site-maps.destroy');
+
+    Route::get('/create-sow', [SoWGeneratorController::class, 'create'])->name('create.sow');
+    Route::post('/generate-sow', [SoWGeneratorController::class, 'generate'])->name('generate.sow');
+    Route::get('/sows', [SoWGeneratorController::class, 'index'])->name('generate.index');
+    Route::get('/view-sow/{id}', [SoWGeneratorController::class, 'view'])->name('sow.view');
 });
 
 Route::get('site-maps/share/{publicId}', [SiteMapController::class, 'shareMap'])->name('site-maps.shareMap');
